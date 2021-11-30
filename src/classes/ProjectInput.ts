@@ -1,4 +1,15 @@
-export default class ProjectInput {
+function Autobind(_target: any, _methodName: string, descriptor: PropertyDescriptor) {
+	const originalMethod = descriptor.value;
+	return {
+		configurable: true,
+		enumerable: false,
+		get() {
+			return originalMethod.bind(this);
+		}
+	}
+}
+
+class ProjectInput {
 	templateElement: HTMLTemplateElement;
 	hostElement: HTMLDivElement;
 	element: HTMLFormElement;
@@ -22,17 +33,18 @@ export default class ProjectInput {
 		this.Attach();
 	}
 
+	@Autobind
 	private SubmitHandler(event: Event) {
 		event.preventDefault();
-		console.debug(event);
-		console.debug(this);
 	}
 
 	private Configure() {
-		this.element.addEventListener('submit', this.SubmitHandler.bind(this));
+		this.element.addEventListener('submit', this.SubmitHandler);
 	}
 
 	private Attach() {
 		this.hostElement.insertAdjacentElement('beforeend', this.element);
 	}
 }
+
+export default ProjectInput;
