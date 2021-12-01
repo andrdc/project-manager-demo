@@ -12,12 +12,12 @@ function Autobind(_target: any, _methodName: string, descriptor: PropertyDescrip
 }
 
 class ProjectInput {
-	templateElement: HTMLTemplateElement;
-	hostElement: HTMLDivElement;
-	element: HTMLFormElement;
-	titleInputElement: HTMLInputElement;
-	descriptionInputElement: HTMLInputElement;
-	peopleInputElement: HTMLInputElement;
+	private templateElement: HTMLTemplateElement;
+	private hostElement: HTMLDivElement;
+	private element: HTMLFormElement;
+	private titleInputElement: HTMLInputElement;
+	private descriptionInputElement: HTMLInputElement;
+	private peopleInputElement: HTMLInputElement;
 
 	constructor() {
 		this.templateElement = document.getElementById('project-input')! as HTMLTemplateElement;
