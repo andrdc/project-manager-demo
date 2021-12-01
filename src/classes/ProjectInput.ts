@@ -1,3 +1,5 @@
+import Validatable from "./Validatable";
+
 function Autobind(_target: any, _methodName: string, descriptor: PropertyDescriptor) {
 	const originalMethod = descriptor.value;
 	return {
@@ -33,31 +35,54 @@ class ProjectInput {
 		this.Attach();
 	}
 
-	@Autobind
-	private SubmitHandler(event: Event) {
-		event.preventDefault();
-		this.GatherUserInput();
-		this.CleanInputs();
-	}
-
-	private CleanInputs() {
-		this.titleInputElement.value = '';
-		this.descriptionInputElement.value = '';
-		this.peopleInputElement.value = '';
-	}
-
-	private GatherUserInput() {
-		console.info(this.titleInputElement.value);
-		console.info(this.descriptionInputElement.value);
-		console.info(this.peopleInputElement.value);
-	}
-
 	private Configure() {
 		this.element.addEventListener('submit', this.SubmitHandler);
 	}
 
 	private Attach() {
 		this.hostElement.insertAdjacentElement('beforeend', this.element);
+	}
+
+	@Autobind
+	private SubmitHandler(event: Event) {
+		event.preventDefault();
+		this.GatherUserInput();
+	}
+
+	private GatherUserInput() {
+		const title = new Validatable(
+			this.titleInputElement.value,
+			true,
+			5,
+			20
+		);
+		const description = new Validatable(
+			this.descriptionInputElement.value,
+			true,
+			10,
+			50
+		);
+		const people = new Validatable(
+			+this.peopleInputElement.value,
+			true,
+			1,
+			5
+		);
+
+		if (title.IsValid() && description.IsValid() && people.IsValid()) {
+			console.info(this.titleInputElement.value);
+			console.info(this.descriptionInputElement.value);
+			console.info(this.peopleInputElement.value);
+			this.ClearInputs();
+		} else {
+			alert('Invalid input');
+		}
+	}
+
+	private ClearInputs() {
+		this.titleInputElement.value = '';
+		this.descriptionInputElement.value = '';
+		this.peopleInputElement.value = '';
 	}
 }
 
