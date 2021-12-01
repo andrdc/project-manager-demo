@@ -9,14 +9,13 @@ class Validatable {
 	constructor(value: number, required?: boolean, min?: number, max?: number);
 	constructor(value: string, required?: boolean, min?: number, max?: number);
 	constructor(value?: any, required?: boolean, min?: number, max?: number) {
+		this.value = value;
+		this.required = required;
+
 		if (typeof value === 'string') {
-			this.value = value;
-			this.required = required;
 			this.minLength = min;
 			this.maxLength = max;
 		} else if (typeof value === 'number') {
-			this.value = value;
-			this.required = required;
 			this.min = min;
 			this.max = max;
 		}
