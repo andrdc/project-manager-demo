@@ -36,6 +36,20 @@ class ProjectInput {
 	@Autobind
 	private SubmitHandler(event: Event) {
 		event.preventDefault();
+		this.GatherUserInput();
+		this.CleanInputs();
+	}
+
+	private CleanInputs() {
+		this.titleInputElement.value = '';
+		this.descriptionInputElement.value = '';
+		this.peopleInputElement.value = '';
+	}
+
+	private GatherUserInput() {
+		console.info(this.titleInputElement.value);
+		console.info(this.descriptionInputElement.value);
+		console.info(this.peopleInputElement.value);
 	}
 
 	private Configure() {
