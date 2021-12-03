@@ -21,7 +21,8 @@ class ProjectList {
 		this.element.id = `${this.type}-projects`;
 
 		this.state.AddListener((projects: Project[]) => {
-			this.assignedProjects = projects;
+			const relevantProjects = projects.filter(project => { return project.status === this.type; });
+			this.assignedProjects = relevantProjects;
 			console.debug(this.assignedProjects);
 			this.RenderProjects();
 		});

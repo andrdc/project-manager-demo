@@ -3,7 +3,7 @@ From Understanding Typescript Course
 
 ## What this project is using?
 - Enums
-- Interfaces
+- Types
 - Classes
 - Decorators
 - Singleton Pattern
