@@ -23,6 +23,7 @@ class ProjectList {
 		this.state.AddListener((projects: Project[]) => {
 			this.assignedProjects = projects;
 			console.debug(this.assignedProjects);
+			this.RenderProjects();
 		});
 
 		this.Attach();
@@ -36,6 +37,17 @@ class ProjectList {
 	private RenderContent() {
 		this.element.querySelector('ul')!.id = `${this.type}-project-list`;
 		this.element.querySelector('h2')!.textContent = `${this.type.toUpperCase()} PROJECTS`;
+	}
+
+	private RenderProjects() {
+		const listElement = document.getElementById(`${this.type}-project-list`)! as HTMLUListElement;
+		listElement.textContent = '';
+
+		for (const project of this.assignedProjects) {
+			const listItemElement = document.createElement('li');
+			listItemElement.textContent = project.title;
+			listElement.appendChild(listItemElement);
+		}
 	}
 }
 
