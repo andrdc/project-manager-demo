@@ -1,5 +1,5 @@
 import ProjectType from "../enums/project-type.enum";
-import Project from "../models/project.model";
+import Project from "./Project";
 import ProjectState from "./ProjectState";
 
 class ProjectList {

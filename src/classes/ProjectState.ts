@@ -1,9 +1,10 @@
-import Project from "../models/project.model";
+import Listener from "../types/listener.type";
+import Project from "./Project";
 
 class ProjectState {
 	private static instance: ProjectState;
 	private projects: Project[];
-	private listeners: Function[];
+	private listeners: Listener[];
 
 	private constructor() {
 		this.projects = [];
@@ -19,12 +20,7 @@ class ProjectState {
 	}
 
 	AddProject(title: string, description: string, people: number) {
-		this.projects.push({
-			id: Math.random().toString(),
-			title: title,
-			description: description,
-			people: people
-		});
+		this.projects.push(new Project(title, description, people));
 
 		console.debug(this.projects);
 
@@ -33,7 +29,7 @@ class ProjectState {
 		}
 	}
 
-	AddListener(listernerFunction: Function) {
+	AddListener(listernerFunction: Listener) {
 		this.listeners.push(listernerFunction);
 
 		console.debug('listener registered');
