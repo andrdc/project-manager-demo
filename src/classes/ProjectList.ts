@@ -1,19 +1,29 @@
 import ProjectType from "../enums/project-type.enum";
+import Project from "../models/project.model";
+import ProjectState from "./ProjectState";
 
 class ProjectList {
+	private type: ProjectType;
+	private assignedProjects: Project[];
+	private state = ProjectState.GetInstance();
 	private templateElement: HTMLTemplateElement;
 	private hostElement: HTMLDivElement;
 	private element: HTMLElement;
-	private type: ProjectType;
 
 	constructor(type: ProjectType) {
 		this.type = type;
+		this.assignedProjects = [];
 		this.templateElement = document.getElementById('project-list')! as HTMLTemplateElement;
 		this.hostElement = document.getElementById('app')! as HTMLDivElement;
 
 		const node = document.importNode(this.templateElement.content, true);
 		this.element = node.firstElementChild as HTMLElement;
 		this.element.id = `${this.type}-projects`;
+
+		this.state.AddListener((projects: Project[]) => {
+			this.assignedProjects = projects;
+			console.debug(this.assignedProjects);
+		});
 
 		this.Attach();
 		this.RenderContent();

@@ -1,3 +1,4 @@
+import ProjectState from "./ProjectState";
 import Validatable from "./Validatable";
 
 function Autobind(_target: any, _methodName: string, descriptor: PropertyDescriptor) {
@@ -12,6 +13,7 @@ function Autobind(_target: any, _methodName: string, descriptor: PropertyDescrip
 }
 
 class ProjectInput {
+	private state = ProjectState.GetInstance();
 	private templateElement: HTMLTemplateElement;
 	private hostElement: HTMLDivElement;
 	private element: HTMLFormElement;
@@ -46,10 +48,15 @@ class ProjectInput {
 	@Autobind
 	private SubmitHandler(event: Event) {
 		event.preventDefault();
-		this.GatherUserInput();
+		const input = this.GatherUserInput();
+		if (Array.isArray(input)) {
+			const [title, description, people] = input;
+			this.CreateProject(title, description, people);
+			this.ClearInputs();
+		}
 	}
 
-	private GatherUserInput() {
+	private GatherUserInput(): [string, string, number] | void {
 		const title = new Validatable(
 			this.titleInputElement.value,
 			true,
@@ -70,13 +77,15 @@ class ProjectInput {
 		);
 
 		if (title.IsValid() && description.IsValid() && people.IsValid()) {
-			console.info(this.titleInputElement.value);
-			console.info(this.descriptionInputElement.value);
-			console.info(this.peopleInputElement.value);
-			this.ClearInputs();
+			return [title.value, description.value, people.value];
 		} else {
 			alert('Invalid input');
+			return;
 		}
+	}
+
+	private CreateProject(title: string, description: string, people: number) {
+		this.state.AddProject(title, description, people);
 	}
 
 	private ClearInputs() {
