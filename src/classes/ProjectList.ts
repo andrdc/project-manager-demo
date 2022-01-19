@@ -1,24 +1,18 @@
-import ProjectType from "../enums/project-type.enum";
+import Component from "./Component";
 import Project from "./Project";
 import ProjectState from "./ProjectState";
+import ProjectType from "../enums/project-type.enum";
 
-class ProjectList {
+class ProjectList extends Component<HTMLDivElement, HTMLElement> {
 	private type: ProjectType;
 	private assignedProjects: Project[];
 	private state = ProjectState.GetInstance();
-	private templateElement: HTMLTemplateElement;
-	private hostElement: HTMLDivElement;
-	private element: HTMLElement;
 
 	constructor(type: ProjectType) {
+		super('project-list', `${type}-projects`);
+
 		this.type = type;
 		this.assignedProjects = [];
-		this.templateElement = document.getElementById('project-list')! as HTMLTemplateElement;
-		this.hostElement = document.getElementById('app')! as HTMLDivElement;
-
-		const node = document.importNode(this.templateElement.content, true);
-		this.element = node.firstElementChild as HTMLElement;
-		this.element.id = `${this.type}-projects`;
 
 		this.state.AddListener((projects: Project[]) => {
 			const relevantProjects = projects.filter(project => { return project.status === this.type; });
@@ -27,12 +21,7 @@ class ProjectList {
 			this.RenderProjects();
 		});
 
-		this.Attach();
 		this.RenderContent();
-	}
-
-	private Attach() {
-		this.hostElement.insertAdjacentElement('beforeend', this.element);
 	}
 
 	private RenderContent() {

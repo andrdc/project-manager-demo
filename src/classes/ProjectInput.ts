@@ -1,3 +1,4 @@
+import Component from "./Component";
 import ProjectState from "./ProjectState";
 import Validatable from "./Validatable";
 
@@ -12,37 +13,24 @@ function Autobind(_target: any, _methodName: string, descriptor: PropertyDescrip
 	}
 }
 
-class ProjectInput {
+class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
 	private state = ProjectState.GetInstance();
-	private templateElement: HTMLTemplateElement;
-	private hostElement: HTMLDivElement;
-	private element: HTMLFormElement;
 	private titleInputElement: HTMLInputElement;
 	private descriptionInputElement: HTMLInputElement;
 	private peopleInputElement: HTMLInputElement;
 
 	constructor() {
-		this.templateElement = document.getElementById('project-input')! as HTMLTemplateElement;
-		this.hostElement = document.getElementById('app')! as HTMLDivElement;
-
-		const node = document.importNode(this.templateElement.content, true);
-		this.element = node.firstElementChild as HTMLFormElement;
-		this.element.id = 'user-input';
+		super('project-input', 'user-input');
 
 		this.titleInputElement = this.element.querySelector('#title')! as HTMLInputElement;
 		this.descriptionInputElement = this.element.querySelector('#description')! as HTMLInputElement;
 		this.peopleInputElement = this.element.querySelector('#people')! as HTMLInputElement;
 
 		this.Configure();
-		this.Attach();
 	}
 
 	private Configure() {
 		this.element.addEventListener('submit', this.SubmitHandler);
-	}
-
-	private Attach() {
-		this.hostElement.insertAdjacentElement('beforeend', this.element);
 	}
 
 	@Autobind
