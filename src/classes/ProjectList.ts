@@ -25,7 +25,6 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> implements Drag
 		this.state.AddListener((projects: Project[]) => {
 			const relevantProjects = projects.filter(project => { return project.status === this.type; });
 			this.assignedProjects = relevantProjects;
-			console.debug(this.assignedProjects);
 			this.RenderProjects();
 		});
 

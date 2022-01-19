@@ -5,8 +5,6 @@ abstract class State<T> {
 
 	AddListener(listernerFunction: Listener<T>) {
 		this.listeners.push(listernerFunction);
-
-		console.debug('listener registered');
 	}
 }
 
