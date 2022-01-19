@@ -1,17 +1,7 @@
 import Component from "./Component";
 import ProjectState from "./ProjectState";
 import Validatable from "./Validatable";
-
-function Autobind(_target: any, _methodName: string, descriptor: PropertyDescriptor) {
-	const originalMethod = descriptor.value;
-	return {
-		configurable: true,
-		enumerable: false,
-		get() {
-			return originalMethod.bind(this);
-		}
-	}
-}
+import { Autobind } from "../utils/autobind-helper";
 
 class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
 	private state = ProjectState.GetInstance();
