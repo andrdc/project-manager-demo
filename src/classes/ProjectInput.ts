@@ -20,7 +20,7 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
 	private peopleInputElement: HTMLInputElement;
 
 	constructor() {
-		super('project-input', 'user-input');
+		super('project-input', 'app', 'user-input');
 
 		this.titleInputElement = this.element.querySelector('#title')! as HTMLInputElement;
 		this.descriptionInputElement = this.element.querySelector('#description')! as HTMLInputElement;
@@ -60,7 +60,7 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
 		const people = new Validatable(
 			+this.peopleInputElement.value,
 			true,
-			1,
+			0,
 			5
 		);
 

@@ -1,6 +1,7 @@
 import Component from "./Component";
 import Project from "./Project";
 import ProjectState from "./ProjectState";
+import ProjectItem from "./ProjectItem";
 import ProjectType from "../enums/project-type.enum";
 
 class ProjectList extends Component<HTMLDivElement, HTMLElement> {
@@ -9,7 +10,7 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
 	private state = ProjectState.GetInstance();
 
 	constructor(type: ProjectType) {
-		super('project-list', `${type}-projects`);
+		super('project-list', 'app', `${type}-projects`);
 
 		this.type = type;
 		this.assignedProjects = [];
@@ -34,9 +35,7 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
 		listElement.textContent = '';
 
 		for (const project of this.assignedProjects) {
-			const listItemElement = document.createElement('li');
-			listItemElement.textContent = project.title;
-			listElement.appendChild(listItemElement);
+			new ProjectItem(listElement.id, project);
 		}
 	}
 }
