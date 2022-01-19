@@ -1,14 +1,13 @@
-import Listener from "../types/listener.type";
 import Project from "./Project";
+import State from "./State";
 
-class ProjectState {
+class ProjectState extends State<Project>{
 	private static instance: ProjectState;
 	private projects: Project[];
-	private listeners: Listener[];
 
 	private constructor() {
+		super();
 		this.projects = [];
-		this.listeners = [];
 	}
 
 	static GetInstance() {
@@ -27,12 +26,6 @@ class ProjectState {
 		for (const listenerFunction of this.listeners) {
 			listenerFunction(this.projects.slice());
 		}
-	}
-
-	AddListener(listernerFunction: Listener) {
-		this.listeners.push(listernerFunction);
-
-		console.debug('listener registered');
 	}
 }
 

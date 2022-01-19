@@ -1,7 +1,7 @@
 import './styles/style.css';
-import ProjectType from './enums/project-type.enum';
 import ProjectInput from './classes/ProjectInput';
 import ProjectList from './classes/ProjectList';
+import ProjectType from './enums/project-type.enum';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 

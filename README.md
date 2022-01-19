@@ -5,6 +5,8 @@ From Understanding Typescript Course
 - Enums
 - Types
 - Classes
+- Inheritance
+- Generics
 - Decorators
 - Singleton Pattern
 - Subcription Pattern

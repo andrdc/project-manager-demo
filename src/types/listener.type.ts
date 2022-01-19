@@ -1,5 +1,3 @@
-import Project from "../classes/Project";
-
-type Listener = (items: Project[]) => void;
+type Listener<T> = (items: T[]) => void;
 
 export default Listener;
