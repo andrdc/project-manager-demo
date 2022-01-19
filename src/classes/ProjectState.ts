@@ -1,3 +1,4 @@
+import ProjectType from "../enums/project-type.enum";
 import Project from "./Project";
 import State from "./State";
 
@@ -18,13 +19,23 @@ class ProjectState extends State<Project>{
 		return this.instance;
 	}
 
-	AddProject(title: string, description: string, people: number) {
-		this.projects.push(new Project(title, description, people));
-
-		console.debug(this.projects);
-
+	private updateListeners() {
 		for (const listenerFunction of this.listeners) {
 			listenerFunction(this.projects.slice());
+		}
+	}
+
+	AddProject(title: string, description: string, people: number) {
+		this.projects.push(new Project(title, description, people));
+		this.updateListeners();
+	}
+
+	UpdateProjectStatus(projectId: string, newStatus: ProjectType) {
+		const project = this.projects.find(project => project.id === projectId);
+
+		if (project && project.status !== newStatus) {
+			project.status = newStatus;
+			this.updateListeners();
 		}
 	}
 }

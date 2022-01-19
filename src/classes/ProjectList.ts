@@ -48,19 +48,31 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> implements Drag
 		}
 	}
 
+	private addDroppableClass() {
+		const listElement = this.element.querySelector('ul');
+		listElement?.classList.add('droppable');
+	}
+
+	private removeDroppableClass() {
+		const listElement = this.element.querySelector('ul');
+		listElement?.classList.remove('droppable');
+	}
+
 	@Autobind
 	dragOverHandler(event: DragEvent) {
-		console.debug(event);
+		event.preventDefault();
+		this.addDroppableClass();
 	};
 
 	@Autobind
 	dropHandler(event: DragEvent) {
-		console.debug(event);
+		this.removeDroppableClass();
+		this.state.UpdateProjectStatus(event.dataTransfer!.getData('text/plain'), this.type === ProjectType.active ? ProjectType.active : ProjectType.finished);
 	};
 
 	@Autobind
-	dragLeaveHandler(event: DragEvent) {
-		console.debug(event);
+	dragLeaveHandler(_: DragEvent) {
+		this.removeDroppableClass();
 	};
 }
 

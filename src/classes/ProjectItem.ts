@@ -32,13 +32,11 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements 
 
 	@Autobind
 	dragStartHandler(event: DragEvent) {
-		console.debug(event);
+		event.dataTransfer!.setData('text/plain', this.project.id);
+		event.dataTransfer!.effectAllowed = 'move';
 	};
 
-	@Autobind
-	dragEndHandler(event: DragEvent) {
-		console.debug(event);
-	};
+	dragEndHandler(_: DragEvent) { };
 }
 
 export default ProjectItem;
