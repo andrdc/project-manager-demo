@@ -1,5 +1,5 @@
 # Project Manager Demo
-From Understanding Typescript Course
+From Understanding Typescript 2020 Edition Course by Maximilian Schwarzmüller
 
 ## What this project is using?
 - Enums
